@@ -8,3 +8,8 @@ spacy
 pydantic
 python-dotenv
 sentence-transformers
+
+# source venv/bin/activate
+# uvicorn app.main:app --reload
+
+#streamlit run streamlit_app.py 

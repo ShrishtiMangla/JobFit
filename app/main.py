@@ -3,6 +3,7 @@ from app.services.pdf_parser import extract_text_from_pdf
 from app.services.matching import calculate_match_score
 from app.models.job_description import JobDescriptionRequest
 from app.services.text_preprocessor import preprocess_text
+from app.services.skill_extractor import find_skill_gaps
 
 
 app = FastAPI(title="JobFit")
@@ -44,16 +45,24 @@ async def analyze_resume(
     # Read uploaded PDF
     pdf_file = await resume.read()
 
-    # Extract text from PDF
+    # Extract resume text
     resume_text = extract_text_from_pdf(pdf_file)
 
-    # Calculate similarity score
+    # Calculate similarity
     similarity_score = calculate_match_score(
+        resume_text,
+        job_description
+    )
+
+    # Find matched and missing skills
+    matched_skills, missing_skills = find_skill_gaps(
         resume_text,
         job_description
     )
 
     return {
         "filename": resume.filename,
-        "match_score": round(similarity_score * 100, 2)
+        "match_score": round(similarity_score * 100, 2),
+        "matched_skills": sorted(matched_skills),
+        "missing_skills": sorted(missing_skills)
     }
