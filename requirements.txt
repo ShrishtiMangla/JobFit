@@ -7,3 +7,4 @@ scikit-learn
 spacy
 pydantic
 python-dotenv
+sentence-transformers

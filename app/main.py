@@ -1,11 +1,8 @@
 from fastapi import FastAPI, UploadFile, File
 from app.services.pdf_parser import extract_text_from_pdf
 from app.models.job_description import JobDescriptionRequest
-
 from app.services.text_preprocessor import preprocess_text
 
-text = "Python Developer!!!   FASTAPI & SQL"
-print(preprocess_text(text))
 
 app = FastAPI(title="JobFit")
 
